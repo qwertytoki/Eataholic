@@ -1,0 +1,51 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      毎日の消費カロリーを計算しましょう
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+  <ion-list>
+    <button ion-button outline>
+        女性
+    </button>
+    <button ion-button outline >
+        男性
+    </button>
+    <ion-item>
+      <ion-label floating>身長(cm)</ion-label>
+      <ion-input type="text" [(ngModel)]="height"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>体重(kg)</ion-label>
+      <ion-input type="text" [(ngModel)]="weight"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>年齢(歳)</ion-label>
+      <ion-input type="text" [(ngModel)]="age"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>活動レベル</ion-label>
+      <ion-range [(ngModel)]="brightness">
+        <ion-icon range-left small name="sunny"></ion-icon>
+        <ion-icon range-right name="sunny"></ion-icon>
+      </ion-range>
+    </ion-item>
+    <ion-item>
+      <button ion-button (click)="calculate(height,weight,age)" block outline>
+          計算する
+      </button>
+    </ion-item>
+
+  </ion-list>
+  <ion-item>
+    <ion-label stacked>あなたの基礎代謝</ion-label>
+    <ion-label right>{{burnCalories}}</ion-label>
+    <ion-label stacked>あなたの一日の摂取カロリー</ion-label>
+    <ion-label right>kcalです</ion-label>
+  </ion-item>
+
+</ion-content>
