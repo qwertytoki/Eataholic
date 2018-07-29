@@ -1,8 +1,8 @@
 {
   "name": "Eataholic",
-  "app_id": "973266cd",
-  "type": "ionic-angular",
   "integrations": {
     "cordova": {}
-  }
+  },
+  "type": "ionic-angular",
+  "pro_id": "973266cd"
 }
