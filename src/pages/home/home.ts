@@ -53,7 +53,7 @@ export class HomePage {
         coefficient = 1.8;
         break;
     }
-    this.burnedCalories = this.baseMetabo * coefficient;
+    this.burnedCalories = Math.round(this.baseMetabo * coefficient);
 
   }
 }
