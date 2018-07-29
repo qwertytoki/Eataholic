@@ -6,7 +6,7 @@ import { NavController } from 'ionic-angular';
   templateUrl: 'home.html'
 })
 export class HomePage {
-  burnCarolies;
+  burnCalories;
   constructor(public navCtrl: NavController) {
 
   }
@@ -18,14 +18,13 @@ export class HomePage {
       isMen = false;
     }
     var calories = 0;
-    if(isMen){
+    if(height === undefined||weight === undefined||age === undefined){
+    }else if(isMen){
       calories = 10*weight + 6.25*height - 5 *age +5 ;
     }else{
-      calories = 60;
+      calories = 10*weight + 6.25*height - 5 *age -161 ;
     }
-
-
-    this.burnCalories = calories + "kcalです";
+    this.burnCalories = calories;
   }
 
 }
