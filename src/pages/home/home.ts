@@ -6,12 +6,17 @@ import { NavController } from 'ionic-angular';
   templateUrl: 'home.html'
 })
 export class HomePage {
-  burnCalories;
+  burnCarolies;
   constructor(public navCtrl: NavController) {
 
   }
-  calculate(height,weight,age){
+  calculate(sex,height,weight,age){
     var isMen = true;
+    if(sex =="men"){
+      isMen = true;
+    }else{
+      isMen = false;
+    }
     var calories = 0;
     if(isMen){
       calories = 10*weight + 6.25*height - 5 *age +5 ;
