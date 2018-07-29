@@ -1,31 +1,46 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      毎日の消費カロリーを計算しましょう
+      日々の消費カロリーを計算しましょう
     </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-
+  <ion-list radio-group (ionChange)="calculate(sex,height,weight,age)" [(ngModel)]="sex">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label>女性</ion-label>
+            <ion-radio value="women" ></ion-radio>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-item>
+            <ion-label>男性</ion-label>
+            <ion-radio value="men"></ion-radio>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-list>
   <ion-list>
-    <button ion-button outline>
-        女性
-    </button>
-    <button ion-button outline >
-        男性
-    </button>
     <ion-item>
       <ion-label floating>身長(cm)</ion-label>
-      <ion-input type="text" [(ngModel)]="height"></ion-input>
+      <ion-input type="number" clearInput (keyup)="calculate(sex,height,weight,age)" [(ngModel)]="height"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label floating>体重(kg)</ion-label>
-      <ion-input type="text" [(ngModel)]="weight"></ion-input>
+      <ion-input type="number" clearInput (keyup)="calculate(sex,height,weight,age)" [(ngModel)]="weight"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label floating>年齢(歳)</ion-label>
-      <ion-input type="text" [(ngModel)]="age"></ion-input>
+      <ion-input type="number" clearInput (keyup)="calculate(sex,height,weight,age)" [(ngModel)]="age"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked>あなたの基礎代謝は</ion-label>
+      <ion-label>{{burnCalories}} kcalです</ion-label>
     </ion-item>
     <ion-item>
       <ion-label>活動レベル</ion-label>
@@ -35,17 +50,8 @@
       </ion-range>
     </ion-item>
     <ion-item>
-      <button ion-button (click)="calculate(height,weight,age)" block outline>
-          計算する
-      </button>
+      <ion-label stacked>あなたの一日の摂取カロリー</ion-label>
+      <ion-label right>kcalです</ion-label>
     </ion-item>
-
   </ion-list>
-  <ion-item>
-    <ion-label stacked>あなたの基礎代謝</ion-label>
-    <ion-label right>{{burnCalories}}</ion-label>
-    <ion-label stacked>あなたの一日の摂取カロリー</ion-label>
-    <ion-label right>kcalです</ion-label>
-  </ion-item>
-
 </ion-content>
