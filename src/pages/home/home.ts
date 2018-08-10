@@ -13,7 +13,7 @@ export class HomePage {
     this.activityAmountInfo = "ほぼ座ってる 運動しない";
     this.burnedCalories = 0;
   }
-  calculate(sex,height,weight,age){
+  calculate(sex,height,weight,age,activeLevel){
     var isMen = true;
     if(sex =="men"){
       isMen = true;
@@ -27,10 +27,14 @@ export class HomePage {
     }else{
       calories = 10*weight + 6.25*height - 5 *age -161 ;
     }
+    this.updateBaseMetabo(calories);
+    this.updateActivityAmount(activeLevel)
+  }
+  updateBaseMetabo(calories){
     this.baseMetabo = calories;
   }
   updateActivityAmount(activeLevel){
-    var coefficient = 1;
+    var coefficient = 1.2;
     switch(activeLevel){
       case 1:
         this.activityAmountInfo = "ほぼ座ってる 運動しない";
@@ -41,15 +45,15 @@ export class HomePage {
         coefficient = 1.3;
         break;
       case 3:
-        this.activityAmountInfo = "週1~2でスポーツとか筋トレ";
+        this.activityAmountInfo = "週1~2でスポーツや筋トレ";
         coefficient = 1.5;
         break;
       case 4:
-        this.activityAmountInfo = "週3とかで筋トレする人";
+        this.activityAmountInfo = "週3以上でスポーツや筋トレ";
         coefficient = 1.7;
         break;
       case 5:
-        this.activityAmountInfo = "めっちゃ筋トレする人";
+        this.activityAmountInfo = "筋トレ is Life";
         coefficient = 1.8;
         break;
     }
