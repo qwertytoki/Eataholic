@@ -1,17 +1,53 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
+import { ViewChild } from '@angular/core';
+import { Slides } from 'ionic-angular';
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
 export class HomePage {
+  @ViewChild(Slides) slides: Slides;
   baseMetabo;
   activityAmountInfo;
   burnedCalories;
+  dietType;
+  dietLevel;
   constructor(public navCtrl: NavController) {
     this.activityAmountInfo = "ほぼ座ってる 運動しない";
+    this.dietType ="現状維持";
     this.burnedCalories = 0;
+    this.dietLevel= 3;
+
+  }
+  ngOnInit(){
+    this.slides.lockSwipeToNext(true);
+  }
+  prevSlide(){
+    this.slides.slidePrev();
+  }
+  nextSlide(){
+    this.slides.slideNext();
+  }
+  calcNutrient(weight,dietLevel,burnedCalories){
+    switch(dietLevel){
+      case 1:
+        this.dietType = "めっちゃ減量";
+        break;
+      case 2:
+        this.dietType = "減量";
+        break;
+      case 3:
+        this.dietType = "現状維持";
+        break;
+      case 4:
+        this.dietType = "増量";
+        break;
+      case 5:
+        this.dietType = "めっちゃ増量";
+        break;
+    }
   }
   calculate(sex,height,weight,age,activeLevel){
     var isMen = true;
@@ -29,9 +65,16 @@ export class HomePage {
     }
     this.updateBaseMetabo(calories);
     this.updateActivityAmount(activeLevel)
+    this.firstPageValidation(height,weight,age);
   }
   updateBaseMetabo(calories){
     this.baseMetabo = calories;
+  }
+
+  firstPageValidation(height,weight,age){
+    if(height !=undefined && weight !=undefined && age !=undefined){
+      this.slides.lockSwipeToNext(false);
+    }
   }
   updateActivityAmount(activeLevel){
     var coefficient = 1.2;
