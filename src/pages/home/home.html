@@ -7,51 +7,113 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-list radio-group (ionChange)="calculate(sex,height,weight,age)" [(ngModel)]="sex">
-    <ion-grid>
-      <ion-row>
-        <ion-col>
-          <ion-item>
-            <ion-label>女性</ion-label>
-            <ion-radio value="women" ></ion-radio>
-          </ion-item>
-        </ion-col>
-        <ion-col>
-          <ion-item>
-            <ion-label>男性</ion-label>
-            <ion-radio value="men"></ion-radio>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </ion-list>
-  <ion-list>
-    <ion-item>
-      <ion-label floating>身長(cm)</ion-label>
-      <ion-input type="number" clearInput (keyup)="calculate(sex,height,weight,age)" [(ngModel)]="height"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label floating>体重(kg)</ion-label>
-      <ion-input type="number" clearInput (keyup)="calculate(sex,height,weight,age)" [(ngModel)]="weight"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label floating>年齢(歳)</ion-label>
-      <ion-input type="number" clearInput (keyup)="calculate(sex,height,weight,age)" [(ngModel)]="age"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label stacked>あなたの基礎代謝は</ion-label>
-      <ion-label>{{baseMetabo}} kcalです</ion-label>
-    </ion-item>
-    <ion-item>
-      <ion-label stacked>1日の活動量 : {{activityAmountInfo}}</ion-label>
-      <ion-range (ionChange)="updateActivityAmount(activeLevel)" min="1" max="5" step="1" snaps="true" [(ngModel)]="activeLevel" color="blue">
-        <ion-icon range-left  name="walk"></ion-icon>
-        <ion-icon range-right name="bicycle"></ion-icon>
-      </ion-range>
-    </ion-item>
-    <ion-item>
-      <ion-label stacked>あなたの一日の消費カロリーは</ion-label>
-      <ion-label right>{{burnedCalories}} kcalです</ion-label>
-    </ion-item>
-  </ion-list>
+  <ion-slides pager>
+    <ion-slide>
+      <ion-list radio-group (ionChange)="calcMetabo(sex,height,weight,age,activeLevel)" [(ngModel)]="sex">
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <ion-label>女性</ion-label>
+                <ion-radio value="women" ></ion-radio>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item>
+                <ion-label>男性</ion-label>
+                <ion-radio value="men"></ion-radio>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-list>
+      <ion-list>
+        <ion-item>
+          <ion-label floating>身長(cm)</ion-label>
+          <ion-input type="number" clearInput (keyup)="calcMetabo(sex,height,weight,age,activeLevel)" [(ngModel)]="height"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label floating>体重(kg)</ion-label>
+          <ion-input type="number" clearInput (keyup)="calcMetabo(sex,height,weight,age,activeLevel)" [(ngModel)]="weight"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label floating>年齢(歳)</ion-label>
+          <ion-input type="number" clearInput (keyup)="calcMetabo(sex,height,weight,age,activeLevel)" [(ngModel)]="age"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label stacked>あなたの活動量 : {{activityAmountInfo}}</ion-label>
+          <ion-range (ionChange)="calcMetabo(sex,height,weight,age,activeLevel)" min="1" max="5" step="1" snaps="true" [(ngModel)]="activeLevel" color="blue">
+            <ion-icon range-left  name="walk"></ion-icon>
+            <ion-icon range-right name="bicycle"></ion-icon>
+          </ion-range>
+        </ion-item>
+      </ion-list>
+      <ion-buttons end>
+        <button ion-button clear (tap)="nextSlide()" icon-end>
+          Next
+          <ion-icon name='arrow-forward'></ion-icon>
+        </button>
+      </ion-buttons>
+    </ion-slide>
+    <ion-slide>
+      <ion-item>
+        <ion-label stacked>あなたの基礎代謝は</ion-label>
+        <ion-label text-center>{{baseMetabo}} kcalです</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label stacked>あなたの1日の消費カロリーは</ion-label>
+        <ion-label text-center>{{burnedCalories}} kcalです</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label stacked>何をする?: {{dietType}}</ion-label>
+        <ion-range (ionChange)="calcNutrient(weight,dietLevel,burnedCalories)"
+          min="1" max="5" step="1" snaps="true" [(ngModel)]="dietLevel" color="blue">
+          <ion-icon range-left  name="trending-down"></ion-icon>
+          <ion-icon range-right name="trending-up"></ion-icon>
+        </ion-range>
+      </ion-item>
+      <ion-buttons>
+        <button float-left ion-button clear (tap)="prevSlide()" icon-start>
+          <ion-icon name='arrow-back'></ion-icon>
+          PREV
+        </button>
+        <button float-right ion-button clear (tap)="nextSlide()" icon-end>
+          Next
+          <ion-icon name='arrow-forward'></ion-icon>
+        </button>
+      </ion-buttons>
+    </ion-slide>
+    <ion-slide>
+      <ion-item>
+        <ion-label text-center>あなたが1日で摂取すべき栄養</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label stacked>カロリー</ion-label>
+        <ion-label text-center>{{neededCalories}} kcal</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label stacked>タンパク質</ion-label>
+        <ion-label text-center>{{protein}} g</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label stacked>脂質</ion-label>
+        <ion-label text-center>{{oil}} g</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label stacked>炭水化物</ion-label>
+        <ion-label text-center>{{carbo}} g</ion-label>
+      </ion-item>
+      <ion-buttons >
+        <button ion-button clear full>
+          記録を開始する
+        </button>
+      </ion-buttons>
+      <ion-buttons float-left>
+        <button ion-button clear (tap)="prevSlide()" icon-start>
+          <ion-icon name='arrow-back'></ion-icon>
+          PREV
+        </button>
+      </ion-buttons>
+    </ion-slide>
+  </ion-slides>
 </ion-content>
